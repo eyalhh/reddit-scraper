@@ -5,6 +5,7 @@ import (
 )
 
 
+
 func main() {
 	data := scraper.RequestData{
 		OperationName: "SubredditFeedElements",
@@ -18,9 +19,9 @@ func main() {
 		Extensions: scraper.RequestExtensions{
 			PersistedQuery: scraper.PersistedQuery{
 				Version: 1,
-				Sha256Hash: "5704f00b5b83ae351a811537372c89f695b9d88d5114b9b319dc74e49c88df93",
+				Sha256Hash: "",
 			},
 		},
 	}
-	scraper.GetPosts(data, "eyJhbGciOiJSUzI1NiIsImtpZCI6IlNIQTI1NjpzS3dsMnlsV0VtMjVmcXhwTU40cWY4MXE2OWFFdWFyMnpLMUdhVGxjdWNZIiwidHlwIjoiSldUIn0.eyJzdWIiOiJsb2lkIiwiZXhwIjoxNzYwMDEyMDkyLjYzNDg5NSwiaWF0IjoxNzU5OTI1NjkyLjYzNDg5NSwianRpIjoiMUJ5SlpDYVo1b2p1bUVydlhYTkFidk5xV1NlMDhRIiwiY2lkIjoib2hYcG9xclpZdWIxa2ciLCJsaWQiOiJ0Ml8xemY3MHhwdDdrIiwibGNhIjoxNzU5OTI1NjkyNjI5LCJzY3AiOiJlSnhra2RHT3REQUloZC1GYTVfZ2Y1VV9tMDF0Y1lhc0xRYW9rM243RFZvY2s3M3l3UG5hd3ZFX1lFMjB3Z1FiRVV5UWN1YmV6RlZyM0Z2R2lzMFVKc2lDcGRBaHNaQVR5NXBJWUlJbnFiRzhZUUlxMkl6TTVVbzcxdFRTQTJHQ3lpVnpXLWh4YVJPYXU3SG8yWW1yS3BlVkJ6WG1xbHdhMjdpRjdZbHhabU8xSVJYWDVWUW1hVmtvbjhXTGZueW4tdFktZjZiZmhQWmtXRkUxUGRBN2dxa2NuNDNGRjlPMC0zdHEwck4xd2FMMlhnOVMtMXlQM2JYUG1vVm01X1p6UEg5dEpPTnlYSnFmeWY3ZDlVdm93Q1BQeTR3NmdCRnItRkdHSFZtSGY5VUJWQzRveVZpQy1EUUN1WEw1OWwtQzdacjByM0U3NG90dlJ0ejBodC1hZ1hvdVFSejZOTDUtQXdBQV9fLXFlZDRfIiwiZmxvIjoxLCJkYSI6e319.Vrmf7ABXFOk8e99qW84ooXkd74QJKq3671WbkddLtvXll09Y6UshRnoRsHDfEkm0_96vjZTpMjCUJZsSKRoiPjVVMRTtoaTmuBZQi8Dw3E3LxbQG7LiV9eR-9Q1C-30qgs-hcLby---dBFpHinTfaEspjoDaygINSyqgG-08C2ON4bfftEJdbB2lRZtOj7N6OAW5XfhLtjz0U8n9R-2OHi0ggTo6JkPSDVMzrKeMJPcya2gsoJF89bD1bBemzut-uOZhmgjTDa4KtsE7gx5HOSqOlYsnapoGnwL6Y0ZBb8CWTbalmBaaHWco1izM5olEYkBMjUvRXuJmd3IOX9pO5w")
+	scraper.GetPosts(data, "")
 }
