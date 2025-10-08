@@ -37,4 +37,5 @@ The program is essentially a Go module, with a `main.go` file at the root of the
 
 Go, being a compiled language, compiles to a self-contained static binary.  
 The inputting of the subreddit name and the number of posts to query are just the first and second CLI arguments, respectively.  
-Usage Example: ./reddit-scraper ubisoft 100 -- this will fetch 100 posts in the ubisoft subreddit
+The access to the reddit api is done via a .env file that needs to be in the same dir as the go binary, that defines the AUTH_TOKEN and the SHA256HASH required by the reddit api.
+Usage Example: ./reddit-scraper ubisoft 100 -- this will fetch 100 posts in the ubisoft subreddit.
