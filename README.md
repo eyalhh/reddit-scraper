@@ -33,7 +33,7 @@ I also decided to make my program work with different numbers of posts — not j
 
 ## The Program Itself
 
-The program is essentially a Go module, with a `main.go` file at the root of the file tree and a `scraper` package that defines and implements the necessary scrape functionality.  
+The program is essentially a Go module, with a `main.go` file at the root of the file tree, a `scraper` package that defines and implements the necessary scrape functionality and a `auth` package that defines and implements the GetAccessSecret function to dynamically generate access tokens that are not related to any user. 
 
 Go, being a compiled language, compiles to a self-contained static binary.  
 The inputting of the subreddit name and the number of posts to query are just the first and second CLI arguments, respectively.  
