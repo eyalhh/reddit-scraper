@@ -2,18 +2,16 @@ package main
 
 import (
 	"encoding/json"
-	"log"
-	"os"
 	"fmt"
 	"github.com/eyalhh/reddit-scraper/scraper"
 	"github.com/joho/godotenv"
+	"log"
+	"os"
 	"strconv"
 )
 
-
-
 func main() {
-	
+
 	if len(os.Args) < 3 {
 		fmt.Printf("Usage: %s <subreddit_name> <num_posts>\n", os.Args[0])
 		return
@@ -30,27 +28,22 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	authKey := os.Getenv("AUTH_TOKEN")
-	hash := os.Getenv("HASH")
+	secret := os.Getenv("MOBILE_APP_LOID_SECRET_BASE64")
 	data := scraper.RequestData{
-		OperationName: "SubredditFeedElements",
+		ID: "5fb5c243c4c4",
 		Variables: scraper.RequestVariables{
-			SubredditName: subreddit,
-			Sort: "HOT",
-			Range: "ALL",
-			IncludeSubredditInPosts: false,
-			IncludePostStats: true,
-			IncludeCurrentUserAwards: true,
-		},
-		Extensions: scraper.RequestExtensions{
-			PersistedQuery: scraper.PersistedQuery{
-				Version: 1,
-				Sha256Hash: hash,
+			SubredditName:           subreddit,
+			Sort:                    "HOT",
+			Range:                   "ALL",
+			AdContext: scraper.AdContext{
+				Layout: "CARD",
 			},
+			IncludeSubredditInPosts: false,
+			IncludePostStats:        true,
 		},
 	}
 
-	posts, err := scraper.GetPostsAtLength(data, authKey, numPosts)
+	posts, err := scraper.GetPostsAtLength(data, secret, numPosts)
 	if err != nil {
 		log.Fatal(err)
 	}

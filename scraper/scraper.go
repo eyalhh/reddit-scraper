@@ -2,39 +2,34 @@ package scraper
 
 import (
 	"bytes"
-	"encoding/json"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"github.com/eyalhh/reddit-scraper/auth"
 	"io"
 	"net/http"
 )
 
 const (
-	BASE_URL = "https://gql-fed.reddit.com/"
+	BASE_URL = "https://gql.reddit.com/"
 )
 
 type RequestData struct {
-	OperationName string            `json:"operationName"`
-	Variables     RequestVariables  `json:"variables"`
-	Extensions    RequestExtensions `json:"extensions"`
+	ID        string           `json:"id"`
+	Variables RequestVariables `json:"variables"`
 }
 type RequestVariables struct {
-	SubredditName            string `json:"subredditName"`
-	Sort                     string `json:"sort"`
-	Range                    string `json:"range"`
-	After                    string `json:"after"`
-	IncludeSubredditInPosts  bool   `json:"includeSubredditInPosts"`
-	IncludePostStats         bool   `json:"includePostStats"`
-	IncludeCurrentUserAwards bool   `json:"includeCurrentUserAwards"`
+	SubredditName           string    `json:"subredditName"`
+	Sort                    string    `json:"sort"`
+	Range                   string    `json:"range"`
+	After                   string    `json:"after"`
+	AdContext               AdContext `json:"adContext"`
+	IncludeSubredditInPosts bool      `json:"includeSubredditInPosts"`
+	IncludePostStats        bool      `json:"includePostStats"`
 }
 
-type RequestExtensions struct {
-	PersistedQuery PersistedQuery `json:"persistedQuery"`
-}
-
-type PersistedQuery struct {
-	Version    int    `json:"version"`
-	Sha256Hash string `json:"sha256Hash"`
+type AdContext struct {
+	Layout string `json:"layout"`
 }
 
 type ResponseData struct {
@@ -61,7 +56,7 @@ type EdgeNode struct {
 	ID           string     `json:"id"`
 	CreatedAt    string     `json:"createdAt"`
 	Title        string     `json:"title"`
-	CommentCount int        `json:"commentCount"`
+	CommentCount float64    `json:"commentCount"`
 	AuthorInfo   AuthorInfo `json:"authorInfo"`
 }
 
@@ -70,21 +65,37 @@ type AuthorInfo struct {
 }
 
 type Post struct {
-	ID           string `json:"id"`
-	Title        string `json:"title"`
-	AuthorName   string `json:"authorName"`
-	CommentCount int    `json:"commentCount"`
-	CreatedAt    string `json:"createdAt"`
+	ID           string  `json:"id"`
+	Title        string  `json:"title"`
+	AuthorName   string  `json:"authorName"`
+	CommentCount float64 `json:"commentCount"`
+	CreatedAt    string  `json:"createdAt"`
 }
 
-func GetPostsAtLength(data RequestData, token string, length int) ([]Post, error) {
+func GetPostsAtLength(data RequestData, secret string, length int) ([]Post, error) {
 
 	var currentLen int
 	var res []Post
+	var token string
+	var err error
 
 	for currentLen < length {
-		posts, err := GetPosts(data, token, "")
+		token, err = auth.GetAccessToken(secret)
 		if err != nil {
+			return nil, err
+		}
+TryAgain:
+		posts, err := GetPosts(data, token)
+		if err != nil {
+			if err.Error() == "invalid access_token" {
+				fmt.Println("invalid access_token getting another one..")
+				token, err = auth.GetAccessToken(secret)
+				if err != nil {
+					return nil, err
+				}
+				goto TryAgain
+			}
+
 			return nil, err
 		}
 		if len(posts) == 0 {
@@ -95,11 +106,11 @@ func GetPostsAtLength(data RequestData, token string, length int) ([]Post, error
 		currentLen += len(posts)
 	}
 
-	return res, nil
+	return res[:length], nil
 
 }
 
-func GetPosts(data RequestData, token string, afterId string) ([]Post, error) {
+func GetPosts(data RequestData, token string) ([]Post, error) {
 
 	jsonData, err := json.MarshalIndent(data, "", "    ")
 	if err != nil {
@@ -120,6 +131,10 @@ func GetPosts(data RequestData, token string, afterId string) ([]Post, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return nil, fmt.Errorf("invalid access_token")
+	}
 
 	respBody, err := io.ReadAll(resp.Body)
 	if err != nil {

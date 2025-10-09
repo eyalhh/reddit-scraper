@@ -37,5 +37,6 @@ The program is essentially a Go module, with a `main.go` file at the root of the
 
 Go, being a compiled language, compiles to a self-contained static binary.  
 The inputting of the subreddit name and the number of posts to query are just the first and second CLI arguments, respectively.  
-The access to the reddit api is done via a .env file that needs to be in the same dir as the go binary, that defines the AUTH_TOKEN and the SHA256HASH required by the reddit api.
+The access to the reddit api is done via a .env file that needs to be in the same dir as the go binary, that defines the mobile app secret which is a base64 hardcoded secret the mobile app has to generate loids (logged out ids), this process is done via the /api/access_token endpoint, and it returns an anonymous access_token which is valid for a day.
+Once the access token expires, the program automatically generate a new one, using the supplied hardcoded secret.
 Usage Example: ./reddit-scraper ubisoft 100 -- this will fetch 100 posts in the ubisoft subreddit.
