@@ -39,4 +39,13 @@ Go, being a compiled language, compiles to a self-contained static binary.
 The inputting of the subreddit name and the number of posts to query are just the first and second CLI arguments, respectively.  
 The access to the reddit api is done via a .env file that needs to be in the same dir as the go binary, that defines the mobile app secret which is a base64 hardcoded secret the mobile app has to generate loids (logged out ids), this process is done via the /api/access_token endpoint, and it returns an anonymous access_token which is valid for a day.
 Once the access token expires, the program automatically generate a new one, using the supplied hardcoded secret.
+
+## Limitations of the code 
+If reddit ever decides to change their internal API or the hardcoded app secret, this scraper won't work and it will need to be reconfigured, tho the structure of the code won't change a lot, as its quite modular.
+
+## How to run the code
+As I stated before, the code is a go module, to compile and get the final binary first you need to have the go cli tool, then the `go build .` command will build the entire project into a binary called `reddit-scraper`
 Usage Example: ./reddit-scraper ubisoft 100 -- this will fetch 100 posts in the ubisoft subreddit.
+
+
+
