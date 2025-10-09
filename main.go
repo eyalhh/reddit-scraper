@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/eyalhh/reddit-scraper/scraper"
-	"github.com/joho/godotenv"
 	"log"
 	"os"
 	"strconv"
+)
+
+const (
+	HARDCODED_MOBILE_APP_LOID_SECRET="b2hYcG9xclpZdWIxa2c6"
 )
 
 func main() {
@@ -23,12 +26,7 @@ func main() {
 		return
 	}
 
-	err = godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
 
-	secret := os.Getenv("MOBILE_APP_LOID_SECRET_BASE64")
 	data := scraper.RequestData{
 		ID: "5fb5c243c4c4",
 		Variables: scraper.RequestVariables{
@@ -43,7 +41,7 @@ func main() {
 		},
 	}
 
-	posts, err := scraper.GetPostsAtLength(data, secret, numPosts)
+	posts, err := scraper.GetPostsAtLength(data, HARDCODED_MOBILE_APP_LOID_SECRET, numPosts)
 	if err != nil {
 		log.Fatal(err)
 	}
