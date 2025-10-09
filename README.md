@@ -10,7 +10,7 @@ I had a problem where I couldn’t log in to Reddit on the emulator because of r
 
 After that, I began tampering with Reddit’s API and discovered a few important details by clicking some buttons on the screen:
 
-1. **https://gql-fed.reddit.com/** is the base URL for fetching post data.  
+1. **https://gql.reddit.com/** is the base URL for fetching post data.  
 2. The first request from Reddit to fetch post data of a given subreddit only yields about 25 posts or so.  
 3. In the request for fetching the post data, there is a **sort** property that defines which posts to respond with and how to sort them.  
 
@@ -46,6 +46,7 @@ If reddit ever decides to change their internal API or the hardcoded app secret,
 ## How to run the code
 As I stated before, the code is a go module, to compile and get the final binary first you need to have the go cli tool, then the `go build .` command will build the entire project into a binary called `reddit-scraper`
 Usage Example: ./reddit-scraper ubisoft 100 -- this will fetch 100 posts in the ubisoft subreddit.
+
 
 
 
