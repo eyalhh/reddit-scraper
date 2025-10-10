@@ -10,7 +10,7 @@ I had a problem where I couldn’t log in to Reddit on the emulator because of r
 
 After that, I began tampering with Reddit’s API and discovered a few important details by clicking some buttons on the screen:
 
-1. **https://gql.reddit.com/** is the base URL for fetching post data. I also notices from that url and from seeing the requests' bodies , that reddit uses graphql and not REST or something similar.
+1. **https://gql.reddit.com/** is the base URL for fetching post data. I also noticed from that url and from seeing the requests' bodies , that reddit uses graphql and not REST or something similar.
 2. The first request from Reddit to fetch post data of a given subreddit only yields about 25 posts or so.  
 3. In the request for fetching the post data, there is a **sort** property that defines which posts to respond with and how to sort them.  
 
