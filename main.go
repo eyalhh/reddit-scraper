@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	HARDCODED_MOBILE_APP_LOID_SECRET="b2hYcG9xclpZdWIxa2c6"
+	HARDCODED_MOBILE_APP_LOID_SECRET="b2hYcG9xclpZdWIxa2c6" // this is base64 encoded, sent vai Basic Auth
 )
 
 func main() {
