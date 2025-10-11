@@ -78,13 +78,12 @@ func GetPostsAtLength(data RequestData, secret string, length int) ([]Post, erro
 	var res []Post
 	var token string
 	var err error
+	token, err = auth.GetAccessToken(secret)
+	if err != nil {
+		return nil, err
+	}
 
 	for currentLen < length {
-		token, err = auth.GetAccessToken(secret)
-		if err != nil {
-			return nil, err
-		}
-TryAgain:
 		posts, err := GetPosts(data, token)
 		if err != nil {
 			if err.Error() == "invalid access_token" {
@@ -93,7 +92,7 @@ TryAgain:
 				if err != nil {
 					return nil, err
 				}
-				goto TryAgain
+				continue
 			}
 
 			return nil, err
